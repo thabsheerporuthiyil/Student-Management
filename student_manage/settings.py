@@ -89,10 +89,9 @@ WSGI_APPLICATION = 'student_manage.wsgi.application'
 # }
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL', default='postgres://postgres:localpass@localhost:5432/userdb')
-    )
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
