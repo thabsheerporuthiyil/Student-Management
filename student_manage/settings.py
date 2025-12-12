@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'student_manage.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL')
+        default=config('DATABASE_URL', default='postgres://postgres:localpass@localhost:5432/userdb')
     )
 }
 
