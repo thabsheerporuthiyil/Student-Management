@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Profile Card -->
+    <div class="profile-card">
+        <div class="profile-header">
+            <!-- Profile Image -->
+            <div class="profile-img">
+                {% if profile.image %}
+                <img src="{{ profile.image.url }}" alt="Profile" class="profile-image">
+                {% else %}
+                <img src="/static/default.png" alt="Profile" class="profile-image">
+                {% endif %}
+            </div>
+            
+            <!-- Profile Info -->
+            <div class="profile-info">
+                <h2>{{ request.user.get_full_name|default:request.user.username|capfirst }}</h2>
+                <p class="student-role">Student • Roll No: <strong>{{ profile.roll_number }}</strong></p>
+                <p class="admission-year">Year of Admission: <strong>{{ profile.year_of_admission }}</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enrolled Courses -->
+    <h3 class="section-title">Your Enrolled Courses</h3>
+    
+    {% if courses %}
+    <div class="courses-grid">
+        {% for course in courses %}
+        <div class="course-card">
+            <h4>{{ course.title }}</h4>
+            <p>{{ course.description|truncatewords:20 }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="bi bi-book"></i>
+        <p>You are not enrolled in any courses yet.</p>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .dashboard-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 20px;
+    }
+    
+    .profile-card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        margin-bottom: 40px;
+    }
+    
+    .profile-header {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 25px;
+    }
+    
+    .profile-img {
+        flex-shrink: 0;
+    }
+    
+    .profile-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--medium-blue);
+    }
+    
+    .profile-info h2 {
+        color: var(--dark-blue);
+        margin-bottom: 10px;
+    }
+    
+    .student-role {
+        color: #666;
+        margin-bottom: 10px;
+    }
+    
+    .admission-year {
+        color: var(--dark-blue);
+        font-weight: 500;
+    }
+    
+    .section-title {
+        color: var(--dark-blue);
+        margin-bottom: 25px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--border-color);
+    }
+    
+    .courses-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+    
+    .course-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        border-left: 4px solid var(--medium-blue);
+        transition: transform 0.3s ease;
+    }
+    
+    .course-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .course-card h4 {
+        color: var(--dark-blue);
+        margin-bottom: 10px;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 50px 20px;
+        color: #6c757d;
+    }
+    
+    .empty-state i {
+        font-size: 3rem;
+        color: var(--border-color);
+        margin-bottom: 15px;
+    }
+    
+    @media (max-width: 768px) {
+        .profile-header {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .courses-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .dashboard-container {
+            padding: 20px 15px;
+        }
+    }
+</style>
+{% endblock %}

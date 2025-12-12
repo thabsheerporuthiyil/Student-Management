@@ -1,0 +1,91 @@
+{% extends "User/admin_base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block admin_content %}
+<style>
+    .admin-stats-card {
+        background: white;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .admin-stats-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+    
+    .stats-icon {
+        font-size: 32px;
+        color: var(--dark-blue);
+        margin-bottom: 15px;
+    }
+    
+    .count-number {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--dark-blue);
+        margin: 10px 0;
+    }
+    
+    .welcome-box {
+        background: white;
+        border: 1px solid var(--border-color);
+        border-left: 4px solid var(--medium-blue);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .admin-header {
+        color: var(--dark-blue);
+        font-weight: 600;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid var(--border-color);
+    }
+</style>
+
+<h1 class="admin-header">
+    <i class="bi bi-speedometer2 me-2"></i>Admin Dashboard
+</h1>
+
+<!-- Welcome Section -->
+<div class="welcome-box">
+    <div class="d-flex align-items-center">
+        <div>
+            <h4 class="fw-bold mb-2" style="color: var(--dark-blue);">
+                <i class="bi bi-award-fill me-2"></i> Welcome, {{ request.user.username|capfirst }}
+            </h4>
+            <p class="text-muted mb-0">
+                Manage students, courses, and enrollments efficiently with your admin tools.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row mt-4">
+    <div class="col-md-6 mb-4">
+        <div class="admin-stats-card">
+            <i class="bi bi-people-fill stats-icon"></i>
+            <h5 class="fw-bold text-muted">Total Students</h5>
+            <h2 class="count-number">{{ student_count }}</h2>
+            <!-- <small class="text-muted">Registered Students</small> -->
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="admin-stats-card">
+            <i class="bi bi-book-half stats-icon"></i>
+            <h5 class="fw-bold text-muted">Total Courses</h5>
+            <h2 class="count-number">{{ course_count }}</h2>
+            <!-- <small class="text-muted">Available Courses</small> -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}

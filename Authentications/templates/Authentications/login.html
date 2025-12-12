@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Login - Student Management System{% endblock %}
+
+{% block content %}
+<div class="auth-card">
+    <div class="auth-header">
+        <h2>Login to System</h2>
+        <p>Access your student dashboard</p>
+    </div>
+    
+    <div class="auth-body">
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+            <div class="alert-danger">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            <div style="margin-bottom: 20px;">
+                <label class="form-label">Username</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                <span class="text-danger">{{ form.username.errors }}</span>
+                {% endif %}
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label class="form-label">Password</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                <span class="text-danger">{{ form.password.errors }}</span>
+                {% endif %}
+            </div>
+
+            {% if not user.is_authenticated %}
+            <div style="display: flex; justify-content: flex-start; margin-bottom: 25px;">
+                <a href="{% url 'authentication:password_reset' %}" class="forgot-link">
+                    Forgot password?
+                </a>
+            </div>
+            {% endif %}
+            <button class="btn btn-primary" type="submit">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="{% url 'authentication:register' %}">Register here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
