@@ -26,7 +26,7 @@ SECRET_KEY = config('KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = config('DEBUG', default=False, cast=bool)
-DEBUG=True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -80,20 +80,25 @@ WSGI_APPLICATION = 'student_manage.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'userdb',
-        'USER': 'postgres',
-        'PASSWORD': config('DB_PASS'),
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-
 # DATABASES = {
-#     'default': dj_database_url.config(default=config('DATABASE_URL'))
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'userdb',
+#         'USER': 'postgres',
+#         'PASSWORD': config('DB_PASS'),
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
 # }
+
+
+DATABASES = {
+    'default': dj_database_url.parse(
+        config('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=not config('DEBUG', default=True, cast=bool)
+    )
+}
 
 
 # Password validation
