@@ -28,7 +28,7 @@ SECRET_KEY = config('KEY')
 # DEBUG = config('DEBUG', default=False, cast=bool)
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["https://student-management-laa6.onrender.com/"]
 
 
 # Application definition
