@@ -14,8 +14,3 @@ def create_student_profile(sender, instance, created, **kwargs):
             year_of_admission=now().year
         )
 
-@receiver(post_save, sender=User)
-def update_student_profile(sender, instance, created, **kwargs):
-    if not created and instance.role == "student":
-        StudentProfile.objects.get_or_create(user=instance)
-        instance.studentprofile.save()

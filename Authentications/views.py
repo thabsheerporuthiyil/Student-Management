@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import RegisterForm, LoginForm
+from django.views.decorators.cache import never_cache
 
 
 def home(request):
@@ -29,7 +30,7 @@ def register_view(request):
 
     return render(request, "Authentications/register.html", {"form": form})
 
-
+@never_cache
 def login_view(request):
     if request.user.is_authenticated:
         return redirect("authentication:redirect_dashboard")
@@ -52,8 +53,8 @@ def logout_view(request):
     logout(request)
     return redirect("authentication:login")
 
-
-@login_required
+@never_cache
+@login_required()
 def redirect_dashboard(request):
     user = request.user
     if user.is_superuser or user.role == "admin":

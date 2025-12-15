@@ -66,12 +66,11 @@ def add_student(request):
             user.set_password(user_form.cleaned_data["password1"])
             user.save()
 
-            profile = StudentProfile.objects.create(
-                user=user,
-                roll_number=generate_roll_number(),
-                year_of_admission=profile_form.cleaned_data["year_of_admission"],
-                image=request.FILES.get("image")
-            )
+            profile = user.studentprofile
+
+            profile.year_of_admission = profile_form.cleaned_data["year_of_admission"]
+            profile.image = request.FILES.get("image")
+            profile.save()
 
             profile.courses.set(profile_form.cleaned_data["courses"])
 
@@ -86,6 +85,7 @@ def add_student(request):
         "user_form": user_form,
         "profile_form": profile_form,
     })
+
 
 
 @login_required
